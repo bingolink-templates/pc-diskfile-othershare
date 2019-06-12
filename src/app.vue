@@ -57,7 +57,7 @@ export default {
     },
     preview(row){
       app.linkplugin.previewDiskFile({
-        fileId: row.id,
+        fileId: row.fileId,
         fileName: row.name,
         fileExt: row.extension,
         previewAvailable: row.preview.available,
