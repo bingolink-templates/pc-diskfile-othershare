@@ -1,7 +1,7 @@
 <template>
   <div class="rec-files">
     <div class="header">
-      <span class="title">{{i18n.RecentlyUsedFile}}</span>
+      <span class="title">{{i18n.FileSharedToMe}}</span>
       <span class="more" @click="toMore()">{{i18n.More}}</span>
     </div>
     <div class="content clearfloat" v-bind:style="{height: contentHeight}">
@@ -39,7 +39,10 @@ export default {
   },
   created(){
     this.contentHeight = this.limitRowsNum * this.rowHeight + 'px';
-    this.loadFiles();
+    app.linkplugin.getUserInfo((userInfo) => {
+      window.userInfo = userInfo;
+      this.loadFiles();
+    })
   },
   mounted(){
   },
@@ -62,7 +65,7 @@ export default {
       })
     },
     toMore(){
-      app.linkplugin.jumpToDiskView();
+      app.linkplugin.jumpToDiskView(['RNODE_SHARE', 'RNODE_SHARE_TO']);
     }
   }
 }

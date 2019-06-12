@@ -36,13 +36,13 @@ function getFileImages(ext) {
 module.exports = {
     getRecentUsedFiles(success, error){
         app.linkplugin.ajax({
-            url: window.env.diskOpenApiUri + 'file/recent_used?limit=100',
+            url: window.env.diskOpenApiUri + 'file/share/list',
+            data: {
+                to: 'U' + window.userInfo.userId
+            },
             success: function(res){
                 try {
-                    var files = [];
-                    util.each(res.rows, function(row){
-                        files = files.concat(row.fileList);
-                    })
+                    var files = res.rows;
                     util.each(files, function(f){
                         f.iconPath = getFileImages(f.extension);
                     })
