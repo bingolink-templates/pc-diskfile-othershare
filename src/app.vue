@@ -44,6 +44,9 @@ export default {
       window.userInfo = userInfo;
       this.loadFiles();
     })
+    app.linkplugin.listenRefreshWidgetData(() => {
+      this.loadFiles();
+    });
   },
   mounted(){
   },
