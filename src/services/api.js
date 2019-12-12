@@ -15,11 +15,11 @@ var fileImageTypes = {
 }
 var fileImages = {};
 var fileTypeImages = {};
-for(var fext in fileImageTypes){
+for (var fext in fileImageTypes) {
     fileImages[fext] = 'static/fileImages/' + fext + '.png';
     var arr = fileImageTypes[fext];
-    if(arr.length > 0){
-        for(var i = 0; i < arr.length; i++){
+    if (arr.length > 0) {
+        for (var i = 0; i < arr.length; i++) {
             fileTypeImages[arr[i]] = fext;
         }
     }
@@ -35,25 +35,26 @@ function getFileImages(ext) {
 }
 
 module.exports = {
-    getRecentUsedFiles(success, error){
+    getRecentUsedFiles(success, error) {
         app.linkplugin.ajax({
             url: window.env.diskOpenApiUri + 'file/share/list',
             data: {
                 to: 'U' + window.userInfo.userId
             },
-            success: function(res){
+            success: function (res) {
                 try {
                     var files = res.rows;
-                    util.each(files, function(f){
+                    util.each(files, function (f) {
                         f.iconPath = getFileImages(f.type == 'D' ? 'folder' : f.extension);
+                        f.createdTime = util.format(f.createdTime)
                     })
                     success(files);
-                } catch(e){
+                } catch (e) {
                     console.log(e);
                     error(window.i18n.ErrorData);
                 }
             },
-            error: function(){
+            error: function () {
                 error(window.i18n.ErrorLoadData);
             }
         })
